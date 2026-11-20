@@ -62,8 +62,8 @@ The archive basename and SHA-256 identify the source without requiring a worksta
 
 ## Sharing and licensing scope
 
-Repository visibility does not establish permission to redistribute laboratory images or their derivatives. Any public release of the image previews, overlays, masks, trace data, or source data requires the applicable data-holder authorization. This provenance document does not assert that such authorization exists and does not grant a data or software license. No ownership, authorship, or license has been inferred from the act of preparing this project.
+Original laboratory data and their derivatives retain their existing ownership and reuse terms. This repository does not assign a new data or software license. Raw microscopy inputs, correspondence, screenshots, and thesis files are not redistributed.
 
-## Git repository and Release storage
+## Git repository storage
 
-The Git repository tracks code, documentation, compact summary tables, validation records, and representative figures. The complete Release snapshot preserves the full candidate CSV, full coordinate JSON, all 68 derived-image sets, and the same code and documentation. The standalone reviewer and a smaller quick-review package are also Release assets. The complete snapshot manifest describes the full Release contents rather than only files tracked in Git.
+The public Git repository contains code, documentation, compact summary tables, validation records, all 68 image-derived preview/overlay/mask sets, and a compact standalone reviewer. The full candidate CSV and coordinate JSON are stored as lossless `.gz` files. Run `python unpack_snapshot.py` to restore their exact original bytes and verify SHA-256 values. The complete repository can be downloaded using Code → Download ZIP. A smaller quick-review ZIP is available under downloads/. Original raw microscopy, correspondence, screenshots, and thesis files are excluded.

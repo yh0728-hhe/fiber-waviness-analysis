@@ -38,7 +38,7 @@ def _image_uri(path: str, base: Path, cache: dict[str, str]) -> str:
     return uri
 
 
-def generate_report(json_path: str | Path, output_path: str | Path | None = None) -> Path:
+def generate_report(json_path: str | Path, output_path: str | Path | None = None, compact: bool = False) -> Path:
     """Read a JSON analysis and write an offline review HTML next to it."""
     source = Path(json_path).resolve()
     raw = source.read_bytes()
@@ -59,10 +59,17 @@ def generate_report(json_path: str | Path, output_path: str | Path | None = None
     payload["meta"] = dict(meta)
     payload["meta"]["analysis_image_count"] = len(all_images)
     payload["meta"]["embedded_image_count"] = len(images)
+    if compact:
+        payload["meta"]["compact_review"] = True
+        payload["meta"]["limitations"] = list(meta.get("limitations", [])) + [
+            "This compact viewer embeds automatic-QC and needs-review paths only. Automatically excluded paths remain in the complete compressed CSV/JSON snapshot; the recorded numerical summaries are unchanged."
+        ]
     payload["images"] = []
     cache: dict[str, str] = {}
     for original in images:
         im = dict(original)
+        if compact:
+            im["segments"] = [segment for segment in original.get("segments", []) if segment.get("status") != "rejected"]
         im["preview_data_uri"] = _image_uri(str(im.get("preview_path") or ""), source.parent, cache) if im.get("preview_path") else ""
         payload["images"].append(im)
     encoded = json.dumps(payload, ensure_ascii=False, allow_nan=False, separators=(",", ":")).replace("<", "\\u003c").replace("\u2028", "\\u2028").replace("\u2029", "\\u2029")
@@ -144,7 +151,7 @@ function updateCards(){let n=0,done=0;for(const image of images){for(const s of 
 function allowed(s){if(!$('show'+({accepted:'Accepted',review:'Review',rejected:'Rejected'}[autoStatus(s)])).checked)return false;const f=$('manualFilter').value,d=decisions[key(im(),s)]?.decision;if(f==='unreviewed')return !['accepted','rejected'].includes(d);return f==='all'||f===d;}
 function orderedRows(){let a=(im()?.segments||[]).filter(allowed);if(sortKey)a=a.slice().sort((a,b)=>{const av=finite(a[sortKey])?Number(a[sortKey]):-Infinity,bv=finite(b[sortKey])?Number(b[sortKey]):-Infinity;return sortDesc?bv-av:av-bv;});return a;}
 function cell(tr,text,cls){const td=document.createElement('td');td.textContent=text;if(cls)td.className=cls;tr.append(td);return td;}
-function renderRows(){rows=orderedRows();const tbody=$('traceRows');tbody.replaceChildren();const fragment=document.createDocumentFragment();tablePage=Math.min(tablePage,Math.max(0,Math.ceil(rows.length/PAGE_SIZE)-1));for(const s of rows.slice(tablePage*PAGE_SIZE,(tablePage+1)*PAGE_SIZE)){const tr=document.createElement('tr');tr.tabIndex=0;tr.setAttribute('aria-label','Selected segment '+str(s.segment_id));if(s===selected)tr.className='selected';cell(tr,str(s.segment_id));const td=cell(tr,'');const badge=document.createElement('span');badge.className='badge '+autoStatus(s);badge.textContent=SHORT[autoStatus(s)];td.append(badge);const decision=decisions[key(im(),s)]?.decision;cell(tr,decision==='accepted'?'Accepted manually':decision==='rejected'?'Rejected manually':'Unreviewed');for(const field of ['waviness','straightness','contour_length_px','end_to_end_px'])cell(tr,fmt(s[field],field.endsWith('_px')?1:3),'num');cell(tr,flags(s)||'—');tr.addEventListener('click',()=>selectSegment(s));tr.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();selectSegment(s);}});fragment.append(tr);}tbody.append(fragment);$('rowCount').textContent=(rows.length?(tablePage*PAGE_SIZE+1)+'–'+Math.min((tablePage+1)*PAGE_SIZE,rows.length):'0')+' / '+rows.length+' matching; original total '+(im()?.segments||[]).length+' segments';$('prevPage').disabled=tablePage===0;$('nextPage').disabled=(tablePage+1)*PAGE_SIZE>=rows.length;if(!rows.length){const tr=document.createElement('tr');const td=cell(tr,'No segments match the current filters.');td.colSpan=8;tbody.append(tr);}requestDraw();}
+function renderRows(){rows=orderedRows();const tbody=$('traceRows');tbody.replaceChildren();const fragment=document.createDocumentFragment();tablePage=Math.min(tablePage,Math.max(0,Math.ceil(rows.length/PAGE_SIZE)-1));for(const s of rows.slice(tablePage*PAGE_SIZE,(tablePage+1)*PAGE_SIZE)){const tr=document.createElement('tr');tr.tabIndex=0;tr.setAttribute('aria-label','Selected segment '+str(s.segment_id));if(s===selected)tr.className='selected';cell(tr,str(s.segment_id));const td=cell(tr,'');const badge=document.createElement('span');badge.className='badge '+autoStatus(s);badge.textContent=SHORT[autoStatus(s)];td.append(badge);const decision=decisions[key(im(),s)]?.decision;cell(tr,decision==='accepted'?'Accepted manually':decision==='rejected'?'Rejected manually':'Unreviewed');for(const field of ['waviness','straightness','contour_length_px','end_to_end_px'])cell(tr,fmt(s[field],field.endsWith('_px')?1:3),'num');cell(tr,flags(s)||'—');tr.addEventListener('click',()=>selectSegment(s));tr.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();selectSegment(s);}});fragment.append(tr);}tbody.append(fragment);$('rowCount').textContent=(rows.length?(tablePage*PAGE_SIZE+1)+'–'+Math.min((tablePage+1)*PAGE_SIZE,rows.length):'0')+' / '+rows.length+' matching; embedded total '+(im()?.segments||[]).length+' segments';$('prevPage').disabled=tablePage===0;$('nextPage').disabled=(tablePage+1)*PAGE_SIZE>=rows.length;if(!rows.length){const tr=document.createElement('tr');const td=cell(tr,'No segments match the current filters.');td.colSpan=8;tbody.append(tr);}requestDraw();}
 function updateDetail(){const yes=!!selected;$('selectedEmpty').hidden=yes;$('selectedDetail').hidden=!yes;for(const id of ['note','accept','reject','unreview'])$(id).disabled=!yes;if(!yes){$('manualState').textContent='No manual decision yet';$('note').value='';return;}const s=selected,d=decisions[key(im(),s)]||{};$('selectedId').textContent=str(s.segment_id);$('autoStatus').textContent=AUTO[autoStatus(s)];$('autoStatus').className='badge '+autoStatus(s);$('waviness').textContent=fmt(s.waviness);$('straightness').textContent=fmt(s.straightness);$('contour').textContent=fmt(s.contour_length_px,1);$('chord').textContent=fmt(s.end_to_end_px,1);$('flags').textContent='Flags: '+(flags(s)||'None provided');$('manualState').textContent=d.decision==='accepted'?'Accepted manually':d.decision==='rejected'?'Rejected manually':'No manual decision yet';$('note').value=d.note||'';}
 function selectSegment(s){selected=s;const index=orderedRows().indexOf(s);if(index>=0)tablePage=Math.floor(index/PAGE_SIZE);updateDetail();renderRows();}
 function review(decision){if(!selected)return;const k=key(im(),selected),old=decisions[k]||{};decisions[k]={...old,decision,note:$('note').value,reviewed_at:new Date().toISOString()};persist();updateDetail();renderRows();}
@@ -198,8 +205,9 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("json_path", nargs="?", type=Path, default=Path(__file__).with_name("report_data.json"))
     parser.add_argument("--output", type=Path)
+    parser.add_argument("--compact", action="store_true", help="Embed only automatic-QC and needs-review paths; preserve recorded summaries")
     args = parser.parse_args()
-    print(generate_report(args.json_path, args.output))
+    print(generate_report(args.json_path, args.output, compact=args.compact))
 
 
 if __name__ == "__main__":

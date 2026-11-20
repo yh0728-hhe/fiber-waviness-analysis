@@ -6,3 +6,5 @@
 *.html text eol=lf
 *.png binary
 *.jpg binary
+*.gz binary
+*.zip binary

@@ -30,7 +30,7 @@ Fragmentation remains substantial. The median accepted length divided by detecte
 ## Five-minute review
 
 1. **One minute:** inspect the [overview figure](../results/overview.png). Read tracing yield and graph coverage alongside the selected-segment waviness summaries. The plotted slice ranges are not confidence intervals.
-2. **Two minutes:** download and open the [offline review interface](https://github.com/yh0728-hhe/fiber-waviness-analysis/releases/download/v0.1.0/review.html) locally. Inspect several green, amber, and gray paths against the underlying image. Green means automatic QC passed; amber means review; gray means rejected. Check whether a path follows one fiber, whether it stops early, and whether an apparent crossing makes its identity ambiguous.
+2. **Two minutes:** download and open the [offline review interface](https://github.com/yh0728-hhe/fiber-waviness-analysis/blob/main/report/review.html?raw=1) locally. Inspect several green and amber paths against the underlying image. Green means automatic QC passed; amber means review. The compact viewer omits rejected paths; those remain in the full compressed snapshot. Check whether a path follows one fiber, whether it stops early, and whether an apparent crossing makes its identity ambiguous.
 3. **One minute:** examine the [accepted-path table](../results/auto_qc_segments.csv) and [per-image diagnostics](../results/images.csv). These contain candidate-segment measurements rather than a count of independent fibers or specimens.
 4. **One minute:** read [what validation establishes](VALIDATION.md), especially smoothing dependence and the absence of an independent manual reference.
 

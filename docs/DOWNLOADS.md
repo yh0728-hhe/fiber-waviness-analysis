@@ -1,11 +1,17 @@
 # Download and review the analysis
 
-Start with the repository README and professor overview; no installation is needed to read them.
+Start with the repository README and professor overview; no installation or GitHub invitation is needed to read this public repository.
 
-- [Interactive reviewer](https://github.com/yh0728-hhe/fiber-waviness-analysis/releases/download/v0.1.0/review.html): download the HTML and open it in Safari or Chrome. It is self-contained.
-- [Quick-review package](https://github.com/yh0728-hhe/fiber-waviness-analysis/releases/download/v0.1.0/fiber-waviness-quick-review.zip): the reviewer, selected measurement tables, figures, and interpretation notes.
-- [Complete snapshot](https://github.com/yh0728-hhe/fiber-waviness-analysis/releases/download/v0.1.0/fiber-waviness-analysis-v0.1.0.zip): full analysis outputs, all 68 image-derived preview/overlay/mask sets, source code, and validation records.
+- [Interactive reviewer](https://github.com/yh0728-hhe/fiber-waviness-analysis/blob/main/report/review.html?raw=1): download the HTML and open it in Safari or Chrome. It is self-contained and embeds seven representative slices. This compact viewer includes automatic-QC and needs-review paths; the complete snapshot retains excluded paths.
+- [Quick-review ZIP](https://github.com/yh0728-hhe/fiber-waviness-analysis/blob/main/downloads/fiber-waviness-quick-review.zip?raw=1): reviewer, selected CSV tables, figures, and interpretation notes.
+- [Complete repository ZIP](https://github.com/yh0728-hhe/fiber-waviness-analysis/archive/refs/heads/main.zip): all tracked analysis outputs, all 68 derived-image sets, source code, and validation records. This is the same as Code → Download ZIP.
 
-The repository is private. The professor must sign in to a GitHub account with repository access before opening these links. The repository owner can invite that account through Settings → Collaborators.
+The full candidate table and coordinate JSON are losslessly compressed. To restore them after downloading or cloning:
 
-Passing automatic QC is not expert confirmation of a biological fiber. Read the validation limitations before interpreting the measurements.
+```bash
+python unpack_snapshot.py
+```
+
+The helper checks the original bytes against SHA-256 values. The interactive report and compact CSVs do not require unpacking or Python.
+
+Passing automatic QC is not expert confirmation of a biological fiber. Read the validation limitations before interpreting measurements.

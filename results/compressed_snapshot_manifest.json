@@ -1,0 +1,21 @@
+{
+  "compression": "gzip, lossless, deterministic mtime=0",
+  "files": [
+    {
+      "compressed_name": "report_data.json.gz",
+      "compressed_bytes": 13760467,
+      "compressed_sha256": "0748b7c725418db8fa5dfb6781b7044e55694c444b648481f8327ef5ea340440",
+      "uncompressed_name": "report_data.json",
+      "uncompressed_bytes": 59350858,
+      "uncompressed_sha256": "aee65b438eebc2cebb6435fd557372a8ad819d9d325794b894f069bd2581cd46"
+    },
+    {
+      "compressed_name": "segments.csv.gz",
+      "compressed_bytes": 6305138,
+      "compressed_sha256": "44b011a67492e21b2b5beae27942b84fd59668ed17a8ce3701396ecb12cf23ee",
+      "uncompressed_name": "segments.csv",
+      "uncompressed_bytes": 26712038,
+      "uncompressed_sha256": "7214daf431a058b07e6629743d581161440dfdfc73edd5b67a0d7d93191ac2b8"
+    }
+  ]
+}

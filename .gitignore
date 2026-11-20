@@ -13,3 +13,7 @@ runs/
 *.pdf
 .env
 .env.*
+results/report_data.json
+results/segments.csv
+
+!downloads/*.zip

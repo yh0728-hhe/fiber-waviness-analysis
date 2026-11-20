@@ -8,7 +8,7 @@ An exploratory image-analysis prototype for quantifying collagen fiber waviness 
 
 1. Read the [professor overview](docs/PROFESSOR_OVERVIEW.md) for the research question, current findings, and requested reference data.
 2. Inspect the [representative trace overlays](results/representative_overlays.jpg), then the [validation and limitations](docs/VALIDATION.md).
-3. Download [the interactive reviewer](https://github.com/yh0728-hhe/fiber-waviness-analysis/releases/download/v0.1.0/review.html) and open it in Safari or Chrome. GitHub's file preview does not execute the report. The downloaded HTML is self-contained and includes seven central slices.
+3. Download [the interactive reviewer](https://github.com/yh0728-hhe/fiber-waviness-analysis/blob/main/report/review.html?raw=1) and open it in Safari or Chrome. GitHub's file preview does not execute the report. The downloaded HTML is self-contained and includes seven central slices. This compact viewer shows automatically retained and needs-review paths; all excluded paths remain in the compressed full snapshot.
 
 ![Field-level technical overview](results/overview.png)
 
@@ -32,11 +32,11 @@ Automatic QC is a geometric filter, not confirmation of a complete or correctly 
 ## Results and code
 
 - [Automatically filtered segment measurements](results/auto_qc_segments.csv), [per-image results](results/images.csv), and [field summaries](results/series_summary.csv).
-- [All candidate paths](https://github.com/yh0728-hhe/fiber-waviness-analysis/releases/download/v0.1.0/fiber-waviness-analysis-v0.1.0.zip), [trace coordinates and report metadata](https://github.com/yh0728-hhe/fiber-waviness-analysis/releases/download/v0.1.0/fiber-waviness-analysis-v0.1.0.zip), and [all 68 preview/overlay/mask sets](https://github.com/yh0728-hhe/fiber-waviness-analysis/releases/download/v0.1.0/fiber-waviness-analysis-v0.1.0.zip).
+- [All candidate paths](results/segments.csv.gz), [trace coordinates and report metadata](results/report_data.json.gz), and [all 68 preview/overlay/mask sets](results/images/).
 - [Threshold sensitivity](results/threshold_sensitivity.csv), [synthetic checks](results/validation/validation_results.json), and [expanded consistency/smoothing audit](results/validation/audit_results.json).
 - [Analysis source](src/analyze_fibers.py), [validation harness](src/validate_pipeline.py), [audit harness](src/audit_pipeline.py), and [report generator](src/build_review.py).
 
-The large candidate table, full coordinate JSON, and all 68 image sets are distributed inside the [complete Release snapshot](https://github.com/yh0728-hhe/fiber-waviness-analysis/releases/download/v0.1.0/fiber-waviness-analysis-v0.1.0.zip). They are not duplicated in Git history. A [smaller quick-review package](https://github.com/yh0728-hhe/fiber-waviness-analysis/releases/download/v0.1.0/fiber-waviness-quick-review.zip) contains the offline viewer, selected CSVs, figures, and summary.
+All 68 preview/overlay/mask sets are stored in [results/images/](results/images/). The [full candidate table](results/segments.csv.gz) and [full coordinate JSON](results/report_data.json.gz) use lossless gzip compression. A [smaller quick-review package](https://github.com/yh0728-hhe/fiber-waviness-analysis/blob/main/downloads/fiber-waviness-quick-review.zip?raw=1) contains the offline viewer, selected CSVs, figures, and summary. Download the entire repository with **Code → Download ZIP** or [this archive link](https://github.com/yh0728-hhe/fiber-waviness-analysis/archive/refs/heads/main.zip).
 
 The image previews are contrast enhanced for display. The measured coordinates use original image dimensions. The reviewer separates automatic results from manual decisions and manual raw-polyline measurements.
 
@@ -51,7 +51,16 @@ python -m pip install -r requirements.txt
 python run_pipeline.py --input-dir /path/to/extracted_training_data --output-dir runs/my_analysis
 ```
 
-Use `python run_pipeline.py --help` for the supported workflow. New runs use a separate output directory and do not overwrite the supplied `results/` snapshot. Original raw TIFFs are required to repeat image extraction; the complete Release snapshot contains the saved CSV/JSON needed for a full audit of the recorded outputs.
+Use `python run_pipeline.py --help` for the supported workflow. New runs use a separate output directory and do not overwrite the supplied `results/` snapshot. Original raw TIFFs are required to repeat image extraction; the saved snapshot can be restored with `python unpack_snapshot.py` for a full audit of the recorded outputs.
+
+To restore the two large saved files after downloading or cloning, run:
+
+```bash
+python unpack_snapshot.py
+python src/audit_pipeline.py --base results --source-dir src
+```
+
+The unpacker verifies SHA-256 values and refuses to overwrite a different existing file.
 
 ## Next validation step
 
