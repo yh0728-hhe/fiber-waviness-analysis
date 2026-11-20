@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.py[cod]
+.DS_Store
+data/
+raw_data/
+work/
+runs/
+*.zip
+*.tif
+*.tiff
+*.czi
+*.pdf
+.env
+.env.*

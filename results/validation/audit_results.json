@@ -1,0 +1,346 @@
+{
+  "purpose": "Independent arithmetic/accounting audit plus analytic smoothing stress tests; no biological validation",
+  "internal_consistency_passed": true,
+  "internal_consistency_failures": [],
+  "biological_validation_completed": false,
+  "audit_script_sha256": "6cee750a1e93cc38cf4dc389fa8969b29450f4e590fa4141d2f49cbde36f64e6",
+  "validation_source_hashes": {
+    "analyze_fibers.py": {
+      "recorded_in_validation": "e0013876bea14d8621c7cf3c58654f547337952c4ce1bf3a7b34ad24ef076918",
+      "current": "e0013876bea14d8621c7cf3c58654f547337952c4ce1bf3a7b34ad24ef076918",
+      "matches": true
+    },
+    "validate_pipeline.py": {
+      "recorded_in_validation": "ec7e233069ea17303d51ed76b580cd8a81a97edeabe86e6c2eeffda92689084c",
+      "current": "ec7e233069ea17303d51ed76b580cd8a81a97edeabe86e6c2eeffda92689084c",
+      "matches": true
+    }
+  },
+  "saved_validation_check_count": 75,
+  "saved_validation_failed_count": 0,
+  "saved_validation_categories": {
+    "numerical": 40,
+    "mask_geometry": 6,
+    "intensity_diagnostic": 8,
+    "pixel_direction": 21
+  },
+  "n_candidate_paths": 100960,
+  "n_images": 68,
+  "n_fields": 7,
+  "status_counts": {
+    "rejected": 88006,
+    "review": 11362,
+    "accepted": 1592
+  },
+  "n_undefined_ratios": 4,
+  "metric_maximum_absolute_errors": {
+    "W_from_L_over_D": 0.0,
+    "S_from_D_over_L": 0.0,
+    "W_times_S_minus_1": 2.220446049250313e-16,
+    "raw_W_from_raw_L_over_D": 0.0
+  },
+  "median_algorithmic_graph_length_coverage": 0.08963370224715742,
+  "audited_file_sha256": {
+    "segments.csv": "7214daf431a058b07e6629743d581161440dfdfc73edd5b67a0d7d93191ac2b8",
+    "auto_qc_segments.csv": "03f9dcd1426d503f49e5eaa46b89e47556fd736e35ca36723302f5ab94a829bb",
+    "images.csv": "8e87318dca84e29d8c827c9ada171e3a2041e5c14fb93e5540eebfff8e3b67d9",
+    "series_summary.csv": "12ba0f00da6a33119288607953832b7ff7abdb8d98e5c6c2c171f9ff726fdf27",
+    "sample_id_summary.csv": "17d61aaa86b32df1fd30a9cd7f505041955fb1bd81ff0e253e76933d999ce05b"
+  },
+  "metric_definitions": {
+    "W": "Gaussian-smoothed, approximately 1-pixel-resampled 2D centerline arc length / original endpoint distance",
+    "S": "endpoint distance / smoothed arc length = 1/W",
+    "raw_W": "unsmoothed polyline arc length / endpoint distance"
+  },
+  "analytic_stress_test_definitions": {
+    "arcs": "R in {20,40,100} pixels; angle in {pi/2,pi,3pi/2}; W=angle/[2*sin(angle/2)]; 16001 ordered points; sigma=2 pixels",
+    "sines": "y(x)=8*sin(2*pi*x/T) pixels, x from 0 to 200 pixels; T in {100,40,10} pixels; 200001 ordered points; sigma in {0,1,2,3} pixels",
+    "sine_reference": "Closed-form complete-elliptic-integral arc length, cross-checked with dense trapezoidal integration of sqrt(1+(dy/dx)^2)",
+    "signed_relative_error": "measured_W/reference_W-1; negative values mean underestimation",
+    "decision_rule": "Diagnostic values only. No new pass/fail threshold is applied to these extra analytic stress tests."
+  },
+  "additional_analytic_stress_tests": [
+    {
+      "shape": "circular_arc",
+      "radius_px": 20.0,
+      "angle_rad": 1.5707963267948966,
+      "smoothing_sigma_px": 2.0,
+      "reference_waviness": 1.1107207345395915,
+      "measured_waviness": 1.1058693891158469,
+      "signed_relative_error": -0.004367745440311377
+    },
+    {
+      "shape": "circular_arc",
+      "radius_px": 20.0,
+      "angle_rad": 3.141592653589793,
+      "smoothing_sigma_px": 2.0,
+      "reference_waviness": 1.5707963267948966,
+      "measured_waviness": 1.5632873163671481,
+      "signed_relative_error": -0.004780384509219027
+    },
+    {
+      "shape": "circular_arc",
+      "radius_px": 20.0,
+      "angle_rad": 4.71238898038469,
+      "smoothing_sigma_px": 2.0,
+      "reference_waviness": 3.332162203618774,
+      "measured_waviness": 3.3160867717489104,
+      "signed_relative_error": -0.004824324533903357
+    },
+    {
+      "shape": "circular_arc",
+      "radius_px": 40.0,
+      "angle_rad": 1.5707963267948966,
+      "smoothing_sigma_px": 2.0,
+      "reference_waviness": 1.1107207345395915,
+      "measured_waviness": 1.1093908804503503,
+      "signed_relative_error": -0.0011972893346521296
+    },
+    {
+      "shape": "circular_arc",
+      "radius_px": 40.0,
+      "angle_rad": 3.141592653589793,
+      "smoothing_sigma_px": 2.0,
+      "reference_waviness": 1.5707963267948966,
+      "measured_waviness": 1.5688600847078922,
+      "signed_relative_error": -0.0012326499966772708
+    },
+    {
+      "shape": "circular_arc",
+      "radius_px": 40.0,
+      "angle_rad": 4.71238898038469,
+      "smoothing_sigma_px": 2.0,
+      "reference_waviness": 3.332162203618774,
+      "measured_waviness": 3.3280155277552956,
+      "signed_relative_error": -0.001244439979234846
+    },
+    {
+      "shape": "circular_arc",
+      "radius_px": 100.0,
+      "angle_rad": 1.5707963267948966,
+      "smoothing_sigma_px": 2.0,
+      "reference_waviness": 1.1107207345395915,
+      "measured_waviness": 1.1105016780388264,
+      "signed_relative_error": -0.00019722014179912595
+    },
+    {
+      "shape": "circular_arc",
+      "radius_px": 100.0,
+      "angle_rad": 3.141592653589793,
+      "smoothing_sigma_px": 2.0,
+      "reference_waviness": 1.5707963267948966,
+      "measured_waviness": 1.5704810254383148,
+      "signed_relative_error": -0.00020072707785423471
+    },
+    {
+      "shape": "circular_arc",
+      "radius_px": 100.0,
+      "angle_rad": 4.71238898038469,
+      "smoothing_sigma_px": 2.0,
+      "reference_waviness": 3.332162203618774,
+      "measured_waviness": 3.3314894018620507,
+      "signed_relative_error": -0.00020191146637238422
+    },
+    {
+      "shape": "sinusoid",
+      "amplitude_px": 8.0,
+      "period_px": 100.0,
+      "x_domain_px": [
+        0.0,
+        200.0
+      ],
+      "full_period_count": 2.0,
+      "smoothing_sigma_px": 0.0,
+      "reference_waviness": 1.060450471519548,
+      "dense_integral_reference_waviness": 1.0604504715195477,
+      "reference_method_disagreement": -2.220446049250313e-16,
+      "measured_waviness": 1.060432541835685,
+      "signed_relative_error": -1.690761081674097e-05
+    },
+    {
+      "shape": "sinusoid",
+      "amplitude_px": 8.0,
+      "period_px": 100.0,
+      "x_domain_px": [
+        0.0,
+        200.0
+      ],
+      "full_period_count": 2.0,
+      "smoothing_sigma_px": 1.0,
+      "reference_waviness": 1.060450471519548,
+      "dense_integral_reference_waviness": 1.0604504715195477,
+      "reference_method_disagreement": -2.220446049250313e-16,
+      "measured_waviness": 1.0602178878016995,
+      "signed_relative_error": -0.00021932539434421638
+    },
+    {
+      "shape": "sinusoid",
+      "amplitude_px": 8.0,
+      "period_px": 100.0,
+      "x_domain_px": [
+        0.0,
+        200.0
+      ],
+      "full_period_count": 2.0,
+      "smoothing_sigma_px": 2.0,
+      "reference_waviness": 1.060450471519548,
+      "dense_integral_reference_waviness": 1.0604504715195477,
+      "reference_method_disagreement": -2.220446049250313e-16,
+      "measured_waviness": 1.0595794395997018,
+      "signed_relative_error": -0.0008213791621951572
+    },
+    {
+      "shape": "sinusoid",
+      "amplitude_px": 8.0,
+      "period_px": 100.0,
+      "x_domain_px": [
+        0.0,
+        200.0
+      ],
+      "full_period_count": 2.0,
+      "smoothing_sigma_px": 3.0,
+      "reference_waviness": 1.060450471519548,
+      "dense_integral_reference_waviness": 1.0604504715195477,
+      "reference_method_disagreement": -2.220446049250313e-16,
+      "measured_waviness": 1.0585329744514929,
+      "signed_relative_error": -0.001808191065545417
+    },
+    {
+      "shape": "sinusoid",
+      "amplitude_px": 8.0,
+      "period_px": 40.0,
+      "x_domain_px": [
+        0.0,
+        200.0
+      ],
+      "full_period_count": 5.0,
+      "smoothing_sigma_px": 0.0,
+      "reference_waviness": 1.3206582266931217,
+      "dense_integral_reference_waviness": 1.320658226693122,
+      "reference_method_disagreement": 2.220446049250313e-16,
+      "measured_waviness": 1.3201989758069892,
+      "signed_relative_error": -0.00034774393317671404
+    },
+    {
+      "shape": "sinusoid",
+      "amplitude_px": 8.0,
+      "period_px": 40.0,
+      "x_domain_px": [
+        0.0,
+        200.0
+      ],
+      "full_period_count": 5.0,
+      "smoothing_sigma_px": 1.0,
+      "reference_waviness": 1.3206582266931217,
+      "dense_integral_reference_waviness": 1.320658226693122,
+      "reference_method_disagreement": 2.220446049250313e-16,
+      "measured_waviness": 1.314831457867693,
+      "signed_relative_error": -0.004412018724949562
+    },
+    {
+      "shape": "sinusoid",
+      "amplitude_px": 8.0,
+      "period_px": 40.0,
+      "x_domain_px": [
+        0.0,
+        200.0
+      ],
+      "full_period_count": 5.0,
+      "smoothing_sigma_px": 2.0,
+      "reference_waviness": 1.3206582266931217,
+      "dense_integral_reference_waviness": 1.320658226693122,
+      "reference_method_disagreement": 2.220446049250313e-16,
+      "measured_waviness": 1.2999660205010224,
+      "signed_relative_error": -0.015668100780253935
+    },
+    {
+      "shape": "sinusoid",
+      "amplitude_px": 8.0,
+      "period_px": 40.0,
+      "x_domain_px": [
+        0.0,
+        200.0
+      ],
+      "full_period_count": 5.0,
+      "smoothing_sigma_px": 3.0,
+      "reference_waviness": 1.3206582266931217,
+      "dense_integral_reference_waviness": 1.320658226693122,
+      "reference_method_disagreement": 2.220446049250313e-16,
+      "measured_waviness": 1.2780613230840232,
+      "signed_relative_error": -0.03225429770407717
+    },
+    {
+      "shape": "sinusoid",
+      "amplitude_px": 8.0,
+      "period_px": 10.0,
+      "x_domain_px": [
+        0.0,
+        200.0
+      ],
+      "full_period_count": 20.0,
+      "smoothing_sigma_px": 0.0,
+      "reference_waviness": 3.4210090764309333,
+      "dense_integral_reference_waviness": 3.4210090764309338,
+      "reference_method_disagreement": 4.440892098500626e-16,
+      "measured_waviness": 3.392453161866946,
+      "signed_relative_error": -0.008347219760603264
+    },
+    {
+      "shape": "sinusoid",
+      "amplitude_px": 8.0,
+      "period_px": 10.0,
+      "x_domain_px": [
+        0.0,
+        200.0
+      ],
+      "full_period_count": 20.0,
+      "smoothing_sigma_px": 1.0,
+      "reference_waviness": 3.4210090764309333,
+      "dense_integral_reference_waviness": 3.4210090764309338,
+      "reference_method_disagreement": 4.440892098500626e-16,
+      "measured_waviness": 3.2260608017721,
+      "signed_relative_error": -0.05698560579740364
+    },
+    {
+      "shape": "sinusoid",
+      "amplitude_px": 8.0,
+      "period_px": 10.0,
+      "x_domain_px": [
+        0.0,
+        200.0
+      ],
+      "full_period_count": 20.0,
+      "smoothing_sigma_px": 2.0,
+      "reference_waviness": 3.4210090764309333,
+      "dense_integral_reference_waviness": 3.4210090764309338,
+      "reference_method_disagreement": 4.440892098500626e-16,
+      "measured_waviness": 2.962344110465028,
+      "signed_relative_error": -0.1340730046949834
+    },
+    {
+      "shape": "sinusoid",
+      "amplitude_px": 8.0,
+      "period_px": 10.0,
+      "x_domain_px": [
+        0.0,
+        200.0
+      ],
+      "full_period_count": 20.0,
+      "smoothing_sigma_px": 3.0,
+      "reference_waviness": 3.4210090764309333,
+      "dense_integral_reference_waviness": 3.4210090764309338,
+      "reference_method_disagreement": 4.440892098500626e-16,
+      "measured_waviness": 2.6814278448865334,
+      "signed_relative_error": -0.21618803546583676
+    }
+  ],
+  "limitations": [
+    "The 75 saved checks are repeated numerical/synthetic assertions, not independent biological validations.",
+    "No independent manual ground truth or complete-fiber identity validation is included.",
+    "The stress tests demonstrate that subpercent errors on a few clean examples do not generalize to all curvature scales.",
+    "A 10-pixel-period, 8-pixel-amplitude sinusoid is a deliberately tight geometric stress test, not a claim about real fibers.",
+    "CSV arithmetic checks do not reconstruct contours from raw microscopy images.",
+    "The saved display paths are downsampled; they do not reproduce the exact full-resolution arc-length computation.",
+    "Automatic-QC accepted paths cover a selected portion of detected skeleton length; this is not biological recall."
+  ]
+}

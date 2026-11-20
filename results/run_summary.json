@@ -1,0 +1,27 @@
+{
+  "n_images": 68,
+  "n_fields": 7,
+  "counts": {
+    "accepted": 1592,
+    "review": 11362,
+    "rejected": 88006
+  },
+  "median_algorithmic_length_coverage": 0.08963370224715742,
+  "min_coverage": 0.0,
+  "max_coverage": 0.1739513566978218,
+  "low_yield_images": [
+    "E16dm_DMSO_s1_img1_z01",
+    "E16dm_DMSO_s1_img1_z02",
+    "E16dm_DMSO_s1_img1_z03",
+    "E16dm_DMSO_s1_img1_z04",
+    "E16dm_DMSO_s1_img1_z05",
+    "E16dm_DMSO_s1_img1_z06",
+    "E16dm_DMSO_s1_img1_z07",
+    "E16dm_DMSO_s1_img2v2_z04",
+    "E16dm_DMSO_s1_img2v2_z05",
+    "E16dm_DMSO_s1_img2v2_z06",
+    "E16dm_DMSO_s1_img2v2_z08",
+    "E16dm_DMSO_s1_img2v2_z09",
+    "E16dm_DMSO_s1_img2v2_z10"
+  ]
+}

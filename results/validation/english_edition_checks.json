@@ -1,0 +1,24 @@
+{
+  "source_tiff_hashes_verified_against_original_zip": 68,
+  "source_archive_sha256": "f17bff430ea6365a956b2fbbc1d05c69f181890ba14e0bbfedf9fd55306f0b04",
+  "numeric_function_AST_identical_between_editions": [
+    "measure_path",
+    "ridge_image",
+    "mask_from_ridge",
+    "skeleton_graph",
+    "trace_mask",
+    "analyze_array",
+    "preview_array",
+    "save_images",
+    "write_csv"
+  ],
+  "byte_identical_numerical_CSVs": [
+    "segments.csv",
+    "auto_qc_segments.csv",
+    "images.csv",
+    "series_summary.csv",
+    "sample_id_summary.csv",
+    "threshold_sensitivity.csv"
+  ],
+  "note": "English edits change presentation and caveats only; no numerical reanalysis or biological validation is implied."
+}

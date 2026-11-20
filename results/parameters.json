@@ -1,0 +1,56 @@
+{
+  "title": "Fiber-segment waviness: exploratory analysis",
+  "analysis_id": "fiber_waviness_v1_english_audited",
+  "metric": "W=smoothed 2D centerline contour length / endpoint distance; S=1/W",
+  "parameters": {
+    "background_sigma_px": 8.0,
+    "denoise_sigma_px": 1.2,
+    "ridge_sigmas_px": [
+      1.5,
+      2.5,
+      3.5
+    ],
+    "normalization_percentile": 99.8,
+    "hysteresis_low_ratio": 0.5,
+    "threshold_factor": 1.0,
+    "min_normalized_signal": 0.06,
+    "min_mask_component_pixels": 25,
+    "minimum_qc_contour_px": 80.0,
+    "minimum_review_contour_px": 40.0,
+    "edge_margin_px": 10,
+    "smoothing_sigma_px": 2.0,
+    "minimum_endpoint_distance_px": 10.0
+  },
+  "review_image_ids": [
+    "E16dm_CD_s5_img1_z05",
+    "E16dm_CD_s5_img2_z06",
+    "E16dm_CD_s6_img1_z06",
+    "E16dm_CD_s6_img2_z07",
+    "E16dm_DMSO_s1_img1_z04",
+    "E16dm_DMSO_s1_img2v2_z06",
+    "E16dm_DMSO_s2_img2_z05"
+  ],
+  "versions": {
+    "python": "3.12.14",
+    "numpy": "2.5.5",
+    "scipy": "1.18.1",
+    "skimage": "0.26.0"
+  },
+  "source_archive": "Fiber Straightness Training Data-20261120T042849Z-1-001.zip (raw input not included)",
+  "manual_validation_completed": false,
+  "limitations": [
+    "Automatic QC passage is not manual validation. The measurements describe candidate 2D segments, not confirmed complete fibers.",
+    "No explicit gap bridging or junction linking is performed. Filtering can still merge nearby signals or miss a true crossing, so correct biological fiber identity is not guaranteed.",
+    "Lengths use original-image pixels and assume isotropic XY spacing. Pixel calibration, common spacing across fields, and Z spacing are unconfirmed. No 3D waviness is reported.",
+    "Adjacent Z slices and multiple fields from the same specimen are not independent biological replicates. No between-condition significance tests are performed.",
+    "Brightness, density, segmentation breaks, and segment length select which paths are measured. These outputs cannot establish a biological CD/DMSO difference.",
+    "Mask area fraction is an algorithm response, not collagen volume density or a validated biological area fraction.",
+    "CZI files and CA conditions are outside this analysis. Treatment labels, sample identities, mounting conditions, and independence require experimental records.",
+    "DMSO_s1_img1 yielded only 3 automatically accepted segments across 3 of 7 slices. Its descriptive median is not a reliable field estimate.",
+    "The 75 synthetic/numerical checks are not 75 independent validations on biological images. Expert reference traces are still required.",
+    "The 8.96% coverage statistic is the median accepted fraction of the detected skeleton-graph length, including noise in the denominator; it is not recall of true collagen fibers."
+  ],
+  "language": "en",
+  "audit_status": "Numerical consistency checked; real-image fiber identity not validated",
+  "source_archive_sha256": "f17bff430ea6365a956b2fbbc1d05c69f181890ba14e0bbfedf9fd55306f0b04"
+}

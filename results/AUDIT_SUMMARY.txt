@@ -1,0 +1,26 @@
+AUDIT SUMMARY - 20 NOVEMBER 2026
+
+The geometric formula and recorded counts are internally consistent.
+Automatic real-image tracing has not been validated against expert traces.
+
+Checked: 68 TIFF hashes against the original ZIP; all 100,960 recorded path
+ratios/counts; 1,592 automatic-QC rows; per-image and hierarchical summaries;
+English/original numerical CSV identity; 75 numerical/synthetic software checks.
+No arithmetic or bookkeeping error was found.
+
+Limits that prevent biological conclusions:
+- Automatic QC passed does not mean a complete or correctly identified fiber.
+- Fragmentation, missed crossings, preprocessing, and length selection can bias W.
+- DMSO_s1_img1 retained only 3 paths from 3 of 7 slices. Its field waviness is
+  withheld in the English overview plot as insufficient tracing.
+- Median 8.96% coverage describes accepted / detected graph length, not biological
+  recall. Noise is included in the detected-graph denominator.
+- Smoothing changes W. Additional analytic sine tests (amplitude 8 px) showed
+  default-setting underestimation of 1.57% at period 40 px and 13.4% at period
+  10 px. These are synthetic stress examples, not SHG image error estimates.
+- Adjacent slices and multiple fields are not independent biological replicates.
+
+Use this as a feasibility/QC prototype. Expert tracing of matched fibers and
+endpoints is required before reporting biological CD/DMSO differences.
+See READ_ME_RESULTS_AND_METHODS.txt, validation/audit_results.json, and
+reproducible audit_pipeline.py for details. Original numerical data are unchanged.
